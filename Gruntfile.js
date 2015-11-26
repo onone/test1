@@ -12,6 +12,8 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+    grunt.loadNpmTasks('grunt-ngdocs');
+
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
@@ -30,6 +32,23 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    ngdocs: {
+       options: {
+           dest: 'docs',
+           /*
+                html5Mode: false,
+           scripts: [
+               'bower_components/angular/angular.js',
+               'bower_components/angular-animate/angular-animate.js'
+           ]
+                **/
+       },
+       api: {
+           src: ['<%= yeoman.app %>/scripts/**/*.js'], //, '!app/**/*-spec.js'
+           title: 'Docs'
+       }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -474,5 +493,10 @@ module.exports = function (grunt) {
     'newer:jscs',
     'test',
     'build'
+  ]);
+  
+  
+  grunt.registerTask('ngd', [
+    'ngdocs'
   ]);
 };
